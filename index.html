@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Gestione contatori Enel">
+    <meta property="og:url" content="https://gestionece.github.io">
+    <meta property="og:image" content="https://gestionece.github.io/resources/img/icon.png">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="resources/img/favicon.png">
+
+    <!-- Hide SearchBar for mobile -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Fonts -->
+    <link href="resources/css/fontawesome.all.min.css" rel="stylesheet">
+    <link href="resources/css/robotomono.bold.regular.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="resources/css/main_mobile.css">
+
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <!-- DarkMode -->
+    <script>
+        if (localStorage.Config && JSON.parse(localStorage.Config).DarkMode == true)
+            document.documentElement.classList.add("__dark-mode");
+            /*if (navigator.canShare) { 
+                document.querySelector("#share").style.display = 'block';
+                document.querySelector("#whatsapp").style.display = 'none';
+            }*/
+    </script>
+
+    <title>Gestione CE</title>
+</head>
+
+<body>
+    <div class="dashboard_mobile">
+
+        <div class="top_nav">
+            <label class="codeCP"><b>ID Carton Pallet</b></label> <!-- CASARS000000273034 -->
+            <button id="options" class="right"><i class="fas fa-sliders-h"></i></button>
+            <button id="whatsapp" class="right"><i class="fab fa-whatsapp"></i></button>
+            <button id="mail" class="right" style="display: none;"><i class="fa fa-envelope"></i></button>
+            <button id="share" class="right" style="display: none;"><i class="fas fa-share-alt"></i></button>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <div class="scrollable-content containerList">
+                    <ul id="listCE" class="listCE">
+                        <!--Injection with JavaScript-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="bottom_nav">
+            <div class="input_wrap">
+                <div class="input_border">
+                    <input id="inputCE" type="text">
+                </div>
+            </div>
+            <div class="button_wrap">
+                <div class="button_toggle">
+                    <button id="download" class="toggle-btn"><i class="fas fa-file-download fa-lg"></i></button>
+                    <button id="newFile" class="toggle-btn"><i class="far fa-file fa-lg"></i></button>
+                    <button id="upload" class="toggle-btn"><i class="fas fa-file-upload fa-lg"></i></button>
+                    <button id="camera" class="toggle-btn" style="display: none;"><i
+                            class="fas fa-camera fa-lg"></i></button>
+                </div>
+                <button id="menu" class="toggle-mnu toggle-btn"><span></span></button>
+            </div>
+        </div>
+
+        <div class="cam_box noselect">
+            <div class="box">
+                <div class="camWrapper">
+                    <video id="video"></video>
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div class="btnBar">
+                    <button id="camClose">Close</button>
+                    <button id="torchButton" style="display: none;">Torch</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="options_box noselect">
+            <div class="clicToClose"></div>
+            <div class="box">
+
+                <div class="container">
+                    <div class="section">
+                        <div class="scrollable-content">
+
+                            <div class="container_opt wrap_a2hs" style="display: none;">
+                                <button id="a2hsBtn">Install App
+                                    <i class="fab fa-google-play"></i>
+                                </button>
+                            </div>
+
+                            <div class="container_opt">
+                                <h2>General:</h2>
+                                <div class="option-switch">
+                                    <label>DarthMode:</label>
+                                    <input id="o-DarkMode" onchange="darthMode(); darkMode();" class="switch right"
+                                        type="checkbox" />
+                                </div>
+                                <div class="option-switch">
+                                    <label>FastDelete:</label>
+                                    <input id="o-FastDelete" onchange="FastDeleteEnabled = false" class="switch right"
+                                        type="checkbox" />
+                                </div>
+                                <div class="option-switch">
+                                    <label>SoundOn:</label>
+                                    <input id="o-SoundOn" class="switch right" type="checkbox" checked />
+                                </div>
+                                <div class="option-text">
+                                    <label>Version:</label>
+                                    <label class="right" id="version">1.1.1v</label>
+                                </div>
+                            </div>
+                            <div id="opWrapCamera" class="container_opt" style="display: none; z-index: 1;">
+                                <!-- temporarily z-index: 1;-->
+                                <h2>Camera:</h2>
+                                <div class="option-select">
+                                    <label>SourceCam:</label>
+                                    <!--surround the select box with a "custom-select" DIV element. Remember to set the width:-->
+                                    <div class="custom-select">
+                                        <select id="o-SourceCam">
+                                            <option value="null">-Select Cam-</option>
+                                            <!--Injection with JavaScript-->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="option-switch">
+                                    <label>DrawLine:</label>
+                                    <input id="o-DrawLine" class="switch right" type="checkbox" checked />
+                                </div>
+                            </div>
+
+                            <div class="container_opt">
+                                <h2>Scan:</h2>
+                                <div class="option">
+                                    <label>AutoScroll:</label>
+                                    <input id="o-AutoScroll" class="switch right" type="checkbox" checked />
+                                </div>
+                                <div class="option-switch">
+                                    <label>DoubleCode:</label>
+                                    <input id="o-DoubleCode" class="switch right" type="checkbox" />
+                                </div>
+                                <div class="option-switch">
+                                    <label>FilterMode:</label>
+                                    <input id="o-FilterMode" class="switch right" type="checkbox" checked/>
+                                </div>
+                                <div class="option-switch">
+                                    <label>ScanEnable:</label>
+                                    <input class="switch right" type="checkbox" disabled />
+                                </div>
+                                <div class="option-switch">
+                                    <label>UpperCase:</label>
+                                    <input class="switch right" type="checkbox" checked disabled />
+                                    <!--
+                                        Se voglio agiungere UpperCase devo mettere una condizione in file commands.js line 339
+                                        e dove campiare css che fa vedere UpperCase
+                                    -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="topBar">
+                    <!--<span>Options:</span>-->
+                    <button class="right">
+                        <i id="opClose" class="fas fa-times fa-2x"></i>
+                    </button>
+                </div>
+                <div class="bottomBar">
+                    <b>by Ruslan Dzyuba</b>
+                    <a href="https://github.com/Trorker/GestioneCE" class="right" target="_blank">
+                        <b><i class="fab fa-github fa-1x"></i></b>
+                    </a>
+                    <a href="https://www.instagram.com/trorker/" class="right" target="_blank">
+                        <b><i class="fab fa-instagram fa-1x"></i></b>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="pop_up noselect">
+            <label class="tittle">Tittle:</label>
+            <label class="text">Text</label>
+        </div>
+
+        <div class="darthVader_box">
+            <div class="DarthVader"></div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script type="text/javascript" src="resources/js/library.js"></script>
+    <script type="text/javascript" src="resources/js/loadConfig.js"></script>
+    <script type="text/javascript" src="resources/js/webapp.js"></script>
+    <script type="text/javascript" src="resources/js/commands.js"></script>
+</body>
+
+</html>
