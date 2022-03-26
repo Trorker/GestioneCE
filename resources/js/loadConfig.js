@@ -27,7 +27,7 @@ function loadConfig() {
             for (nameOption in loadConfig) {
                 var idOptions = "#o-" + nameOption;
                 $(idOptions)[0].value = loadConfig[nameOption];
-                $(idOptions)[0].checked = loadConfig[nameOption];                    
+                $(idOptions)[0].checked = loadConfig[nameOption];
             }
         } else {
             updateConfig()
@@ -44,7 +44,7 @@ function updateConfig() {
         $('[id^="o-"]').each(function (index) {
             var nameOption = ($(this)[0].id).substring(2, ($(this)[0].id).length); //removeLastChar($(this).prev().text());
 
-            if ( typeof( $(this)[0].checked ) !== "boolean") {
+            if (typeof ($(this)[0].checked) !== "boolean") {
                 Config[nameOption] = $(this)[0].value;
             } else {
                 Config[nameOption] = $(this)[0].checked;
@@ -59,17 +59,25 @@ function updateConfig() {
 function loadCodeScan() {
     if (typeof (Storage) !== "undefined") {
         if (localStorage.CodeScan) {
-            var CodeScan = JSON.parse(localStorage.CodeScan);            
+            var CodeScan = JSON.parse(localStorage.CodeScan);
             if (CodeScan.CodeCP) {
                 $('.top_nav .codeCP').children('b').text(CodeScan.CodeCP);
             }
             if (CodeScan.CodeCE) {
                 CodeScan.CodeCE.forEach(function (code) {
-                    $("#listCE").append('<li><label class="count noselect">' +
-                        ($('ul#listCE > li').length + 1).numberFormat('000') +
-                        ': </label><label class="codeCE">' +
-                        pattCE.exec(code)[0] +
-                        '</label><i class="fas fa-times"></i></li>');
+                    if ($('#o-FilterMode')[0].checked == false) {
+                        $("#listCE").append('<li><label class="count noselect">' +
+                            ($('ul#listCE > li').length + 1).numberFormat('000') +
+                            ': </label><label class="codeCE">' + code +
+                            '</label><i class="fas fa-times"></i></li>');
+                    }
+                    else {
+                        $("#listCE").append('<li><label class="count noselect">' +
+                            ($('ul#listCE > li').length + 1).numberFormat('000') +
+                            ': </label><label class="codeCE">' +
+                            pattCE.exec(code)[0] +
+                            '</label><i class="fas fa-times"></i></li>');
+                    }
                 });
             }
         } else {
@@ -88,7 +96,12 @@ function updateCodeScan() {
         CodeScan.CodeCP = $('.top_nav .codeCP').children('b').text();
         var CECodes = [];
         $('ul#listCE li').each(function (index) {
-            CECodes[CECodes.length] = pattCE.exec($(this).text())[0];
+            if ($('#o-FilterMode')[0].checked == false) {
+                CECodes[CECodes.length] = ($(this).text()).substr(4);
+            }
+            else {
+                CECodes[CECodes.length] = pattCE.exec($(this).text())[0];
+            }
         });
         CodeScan.CodeCE = CECodes;
         localStorage.CodeScan = JSON.stringify(CodeScan);
@@ -98,7 +111,7 @@ function updateCodeScan() {
 }
 
 function darthMode(params) {
-    if ($('#o-DarkMode')[0].checked == true){
+    if ($('#o-DarkMode')[0].checked == true) {
         new Audio("resources/sound/DarthGiveYourself.wav").play();
         $('.darthVader_box').fadeIn().delay(2800).fadeOut();
 
