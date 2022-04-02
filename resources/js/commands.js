@@ -293,8 +293,8 @@ $(document).ready(function () {
             "1.0.1 - [***] prima versione stabile;\n" +
             "1.1.0 - [ADD] Caricamento del file;\n" +
             "1.1.1 - [EDIT] Spostato tasto condividi;\n" +
-            "1.1.1 - [Add] FilterMode;\n" +
-            "1.1.2 - [FIX] FilterMode"
+            "1.1.1 - [ADD] FilterMode;\n" +
+            "1.1.2 - [FIX] FilterMode;"
         });
         return false;
     });
